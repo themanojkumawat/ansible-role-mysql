@@ -1,0 +1,31 @@
+---
+- name: copy mysql script
+  template:
+    src: "mysql"
+    dest: /usr/local/bin/mysql
+    mode: 0755
+    owner: root
+    group: root
+
+- name: copy mysql script
+  template:
+    src: "mysql.service"
+    dest: /etc/systemd/system/mysql.service
+    mode: 0644
+    owner: root
+    group: root
+
+- name: restart mysql
+  service:
+    name: mysql
+    state: restarted
+    enabled: true
+
+- name: wait for mysql to become ready
+  wait_for:
+    host: "{{mysql_bind_ip}}"
+    port: "{{ mysql_bind_port }}"
+    state: started
+    delay: 5
+    connect_timeout: 15
+    timeout: 300

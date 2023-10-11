@@ -1,0 +1,9 @@
+[Unit]
+Description=mysql Server
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStart=/usr/local/bin/mysql
+[Install]
+WantedBy=multi-user.target

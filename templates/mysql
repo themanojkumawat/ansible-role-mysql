@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+docker pull mysql:"{{ mysql_version }}"
+
+docker rm -f -v mysql || :
+
+docker run -u  root  --rm --name=mysql \
+         -p "{{ mysql_bind_port }}:{{ mysql_bind_port }}" \
+         --privileged  --cap-add=ALL \
+         --ulimit nproc=65535 --ulimit memlock=-1:-1 --ulimit  nofile=165536:165536  \
+         --log-driver json-file --log-opt max-size=500k --log-opt max-file=50 \
+        -v {{ mysql_data_dir }}:/var/lib/mysql \
+        --env MYSQL_USER={{ MYSQL_USER }} \
+        --env MYSQL_USER_HOST=% \
+        --env MYSQL_PASSWORD={{ MYSQL_PASSWORD  }}  \
+        --env MYSQL_ROOT_HOST=% \
+        --env MYSQL_DATABASE={{ MYSQL_DATABASE }} \
+        --env MYSQL_ROOT_PASSWORD={{ MYSQL_ROOT_PASSWORD }} \
+         mysql:{{ mysql_version }} --default-authentication-plugin=mysql_native_password

@@ -1,0 +1,14 @@
+---
+
+- name: create mysql dirs
+  file:
+    path: "{{ item|safe|trim }}"
+    state: directory
+    owner: "{{ mysql_user }}"
+    group: "{{ mysql_group }}"
+    recurse: true
+  changed_when: false
+  with_items:
+    - "{{ mysql_opt_dir }}"
+    - "{{ mysql_data_dir }}"
+

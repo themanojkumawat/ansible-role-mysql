@@ -1,0 +1,12 @@
+---
+
+- name: setup group
+  group:
+    name: "{{ mysql_group }}"
+    system: true
+
+- name: setup user
+  user:
+    name: "{{ mysql_user }}"
+    system: true
+    group: "{{ mysql_group }}"

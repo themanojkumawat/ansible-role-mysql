@@ -1,0 +1,17 @@
+---
+mysql_version: 8
+mysql_cluster_name: mysql
+mysql_bind_ip: 0.0.0.0
+mysql_bind_port: 3306
+
+mysql_user: mysql
+mysql_group: mysql
+
+mount_path: "/data"
+mysql_opt_dir: "/opt/{{ mysql_cluster_name }}"
+mysql_data_dir: "{{ mount_path }}/{{ mysql_cluster_name }}"
+
+MYSQL_ROOT_PASSWORD: password
+MYSQL_USER: app
+MYSQL_PASSWORD: password
+MYSQL_DATABASE: test
